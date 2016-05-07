@@ -9,17 +9,17 @@ _Check ConfigManagerTests_
     `let configManager = ConfigManager(configPath: configPath)`
 
 * ConfigManager will now try to load 2 files in order:
-	* `<bundle path>/.ConfigFile.json`
-	* `<bundle path>/ConfigFile.json`
+	# `<bundle path>/.ConfigFile.json`
+	# `<bundle path>/ConfigFile.json`
 
 It's recommended that you add .ConfigFile.json to your .gitignore so it acts as a local override.
 
 ### With Environment per scheme/target
 * Define environment variable `CONFIG_MANAGER_ENV` per scheme or target. Say you have one that's called `Dev`, one that's `Staging` and one that's `Prod`.
 * If you initialize the ConfigManager the same way as before, it will now try to load 3 files in order:
-	* `<bundle path>/.ConfigFile.json`
-	* `<bundle path>/ConfigFile.{Dev, Staging, Prod}.json`
-	* `<bundle path>/ConfigFile.json`
+	# `<bundle path>/.ConfigFile.json`
+	# `<bundle path>/ConfigFile.{Dev, Staging, Prod}.json`
+	# `<bundle path>/ConfigFile.json`
 * Note that you can override the environment at initialization:
 	* `let configManager = ConfigManager(configPath: configPath, environment: "Custom")`
 
