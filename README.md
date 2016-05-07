@@ -26,6 +26,21 @@ It's recommended that you add .ConfigFile.json to your .gitignore so it acts as 
 ### Extend
 * A special key will be read in each configuration file, `"!extends"` can be put into the json and it will try to load & extend that file:
 
+`InheritanceTestParent.json`
+```
+{
+  "parentKey": "parentValue",
+  "mergedKey": "mergedParentValue",
+  "config": {
+    "configKey": {
+      "configA": "configAValue",
+      "configB": [ "configBValue0", "configBValue1" ]
+    }
+  }
+}
+```
+
+`InheritanceTestChild.json`
 ```
 {
   "!extends": "InheritanceTestParent.json",
