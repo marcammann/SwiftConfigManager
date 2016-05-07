@@ -1,0 +1,12 @@
+{
+	"parentKey": "parentValue",
+	"mergedKey": "mergedParentValue",
+    "config": {
+        "configKey": {
+            "configA": "configAValue",
+            "configB": [ "configBValue0", "configBValue1" ]
+        }
+    }
+}
+
+

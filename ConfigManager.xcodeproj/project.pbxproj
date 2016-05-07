@@ -7,9 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632898771CDD1D2100E1461D /* CollectionType+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632898761CDD1D2100E1461D /* CollectionType+Merge.swift */; };
+		6364F9FD1CDD6712004A514E /* ConfigManagerTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9F91CDD6712004A514E /* ConfigManagerTest.json */; };
+		6364F9FE1CDD6712004A514E /* ConfigManagerTest.TestEnv.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9FA1CDD6712004A514E /* ConfigManagerTest.TestEnv.json */; };
+		6364F9FF1CDD6712004A514E /* InheritanceTestChild.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9FB1CDD6712004A514E /* InheritanceTestChild.json */; };
+		6364FA001CDD6712004A514E /* InheritanceTestParent.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9FC1CDD6712004A514E /* InheritanceTestParent.json */; };
+		6364FA021CDD671C004A514E /* .ConfigManagerTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364FA011CDD671C004A514E /* .ConfigManagerTest.json */; };
 		63B11B2C1CD87674001B7839 /* ConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 63B11B2B1CD87674001B7839 /* ConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63B11B331CD87674001B7839 /* ConfigManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B11B281CD87674001B7839 /* ConfigManager.framework */; };
 		63B11B381CD87674001B7839 /* ConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B11B371CD87674001B7839 /* ConfigManagerTests.swift */; };
+		63B11B431CD876F5001B7839 /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B11B421CD876F5001B7839 /* ConfigManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +30,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		632898761CDD1D2100E1461D /* CollectionType+Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+Merge.swift"; sourceTree = "<group>"; };
+		6364F9F91CDD6712004A514E /* ConfigManagerTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ConfigManagerTest.json; sourceTree = "<group>"; };
+		6364F9FA1CDD6712004A514E /* ConfigManagerTest.TestEnv.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ConfigManagerTest.TestEnv.json; sourceTree = "<group>"; };
+		6364F9FB1CDD6712004A514E /* InheritanceTestChild.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InheritanceTestChild.json; sourceTree = "<group>"; };
+		6364F9FC1CDD6712004A514E /* InheritanceTestParent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InheritanceTestParent.json; sourceTree = "<group>"; };
+		6364FA011CDD671C004A514E /* .ConfigManagerTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = .ConfigManagerTest.json; sourceTree = "<group>"; };
 		63B11B281CD87674001B7839 /* ConfigManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConfigManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B11B2B1CD87674001B7839 /* ConfigManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
 		63B11B2D1CD87674001B7839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B11B321CD87674001B7839 /* ConfigManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConfigManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B11B371CD87674001B7839 /* ConfigManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManagerTests.swift; sourceTree = "<group>"; };
 		63B11B391CD87674001B7839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63B11B421CD876F5001B7839 /* ConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +87,8 @@
 			children = (
 				63B11B2B1CD87674001B7839 /* ConfigManager.h */,
 				63B11B2D1CD87674001B7839 /* Info.plist */,
+				63B11B421CD876F5001B7839 /* ConfigManager.swift */,
+				632898761CDD1D2100E1461D /* CollectionType+Merge.swift */,
 			);
 			path = ConfigManager;
 			sourceTree = "<group>";
@@ -80,6 +96,11 @@
 		63B11B361CD87674001B7839 /* ConfigManagerTests */ = {
 			isa = PBXGroup;
 			children = (
+				6364FA011CDD671C004A514E /* .ConfigManagerTest.json */,
+				6364F9F91CDD6712004A514E /* ConfigManagerTest.json */,
+				6364F9FA1CDD6712004A514E /* ConfigManagerTest.TestEnv.json */,
+				6364F9FB1CDD6712004A514E /* InheritanceTestChild.json */,
+				6364F9FC1CDD6712004A514E /* InheritanceTestParent.json */,
 				63B11B371CD87674001B7839 /* ConfigManagerTests.swift */,
 				63B11B391CD87674001B7839 /* Info.plist */,
 			);
@@ -184,6 +205,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6364FA021CDD671C004A514E /* .ConfigManagerTest.json in Resources */,
+				6364F9FF1CDD6712004A514E /* InheritanceTestChild.json in Resources */,
+				6364F9FE1CDD6712004A514E /* ConfigManagerTest.TestEnv.json in Resources */,
+				6364FA001CDD6712004A514E /* InheritanceTestParent.json in Resources */,
+				6364F9FD1CDD6712004A514E /* ConfigManagerTest.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +220,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				632898771CDD1D2100E1461D /* CollectionType+Merge.swift in Sources */,
+				63B11B431CD876F5001B7839 /* ConfigManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +338,7 @@
 		63B11B3D1CD87674001B7839 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +349,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codesofa.ConfigManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		63B11B3E1CD87674001B7839 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -378,6 +409,7 @@
 				63B11B3E1CD87674001B7839 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63B11B3F1CD87674001B7839 /* Build configuration list for PBXNativeTarget "ConfigManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -386,6 +418,7 @@
 				63B11B411CD87674001B7839 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

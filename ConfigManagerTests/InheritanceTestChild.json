@@ -1,0 +1,11 @@
+{
+	"!extends": "InheritanceTestParent.json",
+	"childKey": "childValue",
+	"mergedKey": "mergedChildValue",
+    "config": {
+        "configKey": {
+            "childConfigA": "configAChildValue",
+            "configB": [ "childConfigBValue0", "childConfigBValue1", "childConfigBValue2" ]
+        }
+    }
+}
