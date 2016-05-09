@@ -14,7 +14,7 @@ struct ConfigManagerStringConstants {
     static let ConfigurationExtensionKey = "!extends"
 }
 
-protocol ConfigManagerKeyType {
+public protocol ConfigManagerKeyType {
     associatedtype ValueType
     
     var keyPath: String { get set }
@@ -23,20 +23,20 @@ protocol ConfigManagerKeyType {
 }
 
 
-extension ConfigManagerKeyType where ValueType: NilLiteralConvertible {
-    init(_ key: String) {
+public extension ConfigManagerKeyType where ValueType: NilLiteralConvertible {
+    public init(_ key: String) {
         self.init(key, nil)
     }
 }
 
 
 public struct ConfigManagerKey<T>: ConfigManagerKeyType {
-    var keyPath: String
-    var defaultValue: ValueType
+    public var keyPath: String
+    public var defaultValue: ValueType
     
-    typealias ValueType = T
+    public typealias ValueType = T
     
-    init(_ key: String, _ aDefaultValue: ValueType) {
+    public init(_ key: String, _ aDefaultValue: ValueType) {
         keyPath = key
         defaultValue = aDefaultValue
     }
