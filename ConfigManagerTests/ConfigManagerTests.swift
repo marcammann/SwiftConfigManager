@@ -26,7 +26,7 @@ struct SomeConfig {
     
     struct K {
         static let TestKeyValue = ConfigManagerKey<String?>("some.config")
-        static let AnotherTestKeyValue = ConfigManagerKey<String?>("another.config", "defaultValue")
+        static let AnotherTestKeyValue = ConfigManagerKey<String>("another.config", "defaultValue")
     }
 }
 
