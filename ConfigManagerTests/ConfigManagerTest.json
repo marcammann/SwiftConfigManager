@@ -1,7 +1,5 @@
 {
   "some": {
-    "config": {
-      "valuePrivate"
-    }
+    "config": "valuePrivate"
   }
 }

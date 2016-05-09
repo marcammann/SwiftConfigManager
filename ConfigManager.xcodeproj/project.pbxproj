@@ -13,6 +13,7 @@
 		6364F9FF1CDD6712004A514E /* InheritanceTestChild.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9FB1CDD6712004A514E /* InheritanceTestChild.json */; };
 		6364FA001CDD6712004A514E /* InheritanceTestParent.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364F9FC1CDD6712004A514E /* InheritanceTestParent.json */; };
 		6364FA021CDD671C004A514E /* .ConfigManagerTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 6364FA011CDD671C004A514E /* .ConfigManagerTest.json */; };
+		63854F3D1CDE61A5009E9487 /* ValueTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 63854F3C1CDE61A5009E9487 /* ValueTest.json */; };
 		63B11B2C1CD87674001B7839 /* ConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 63B11B2B1CD87674001B7839 /* ConfigManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63B11B331CD87674001B7839 /* ConfigManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B11B281CD87674001B7839 /* ConfigManager.framework */; };
 		63B11B381CD87674001B7839 /* ConfigManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B11B371CD87674001B7839 /* ConfigManagerTests.swift */; };
@@ -36,6 +37,7 @@
 		6364F9FB1CDD6712004A514E /* InheritanceTestChild.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InheritanceTestChild.json; sourceTree = "<group>"; };
 		6364F9FC1CDD6712004A514E /* InheritanceTestParent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = InheritanceTestParent.json; sourceTree = "<group>"; };
 		6364FA011CDD671C004A514E /* .ConfigManagerTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = .ConfigManagerTest.json; sourceTree = "<group>"; };
+		63854F3C1CDE61A5009E9487 /* ValueTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ValueTest.json; sourceTree = "<group>"; };
 		63B11B281CD87674001B7839 /* ConfigManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConfigManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B11B2B1CD87674001B7839 /* ConfigManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
 		63B11B2D1CD87674001B7839 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		63B11B361CD87674001B7839 /* ConfigManagerTests */ = {
 			isa = PBXGroup;
 			children = (
+				63854F3C1CDE61A5009E9487 /* ValueTest.json */,
 				6364FA011CDD671C004A514E /* .ConfigManagerTest.json */,
 				6364F9F91CDD6712004A514E /* ConfigManagerTest.json */,
 				6364F9FA1CDD6712004A514E /* ConfigManagerTest.TestEnv.json */,
@@ -206,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6364FA021CDD671C004A514E /* .ConfigManagerTest.json in Resources */,
+				63854F3D1CDE61A5009E9487 /* ValueTest.json in Resources */,
 				6364F9FF1CDD6712004A514E /* InheritanceTestChild.json in Resources */,
 				6364F9FE1CDD6712004A514E /* ConfigManagerTest.TestEnv.json in Resources */,
 				6364FA001CDD6712004A514E /* InheritanceTestParent.json in Resources */,

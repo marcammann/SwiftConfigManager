@@ -9,6 +9,28 @@
 import XCTest
 @testable import ConfigManager
 
+struct K {
+    static let TestKeyValue = ConfigManagerKey<String?>("some.config")
+    static let AnotherTestKeyValue = ConfigManagerKey<String?>("another.config")
+}
+
+
+struct SomeConfig {
+    let url: String?
+    let other: String?
+    
+    init(configManager: ConfigManager) {
+        url = configManager[K.TestKeyValue]
+        other = configManager[K.AnotherTestKeyValue]
+    }
+    
+    struct K {
+        static let TestKeyValue = ConfigManagerKey<String?>("some.config")
+        static let AnotherTestKeyValue = ConfigManagerKey<String?>("another.config", "defaultValue")
+    }
+}
+
+
 class ConfigManagerTests: XCTestCase {
     
     override func setUp() {
@@ -98,13 +120,31 @@ class ConfigManagerTests: XCTestCase {
         XCTAssertEqual(childConfigData["configA"] as? String, "configAValue")
     }
     
+    func testKeyAccess() {
+        let defaultPath = NSBundle(forClass: ConfigManagerTests.self).pathForResource("ConfigManagerTest", ofType: "json", inDirectory: "")
+        let configManager = ConfigManager(basePath: defaultPath, environment: "TestEnv")
+        
+        configManager["some.config"]
+        XCTAssertEqual(configManager[K.TestKeyValue], "valuePrivate")
+        
+        let cfg = SomeConfig(configManager: configManager)
+        XCTAssertEqual(cfg.url, "valuePrivate")
+        XCTAssertEqual(cfg.other, "defaultValue")
+    }
+    
+    func testValueTransformation() {
+        let defaultPath = NSBundle(forClass: ConfigManagerTests.self).pathForResource("ValueTest", ofType: "json", inDirectory: "")
+        let configManager = ConfigManager(basePath: defaultPath, environment: "TestEnv")
+        
+        let url = configManager[ConfigManagerKey<NSURL?>("url")]
+        XCTAssertEqual(url, NSURL(string: "http://google.com"))
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {
-            // let defaultPath = NSBundle(forClass: ConfigManagerTests.self).pathForResource("ConfigManagerTest", ofType: "json", inDirectory: "")
-            //  let configManager = ConfigManager(basePath: defaultPath, environment: "TestEnv")
-            // Put the code you want to measure the time of here.
+            let defaultPath = NSBundle(forClass: ConfigManagerTests.self).pathForResource("InheritanceTestChild", ofType: "json", inDirectory: "")
+            let configManager = ConfigManager(basePath: defaultPath, environment: "TestEnv")
         }
     }
-    
 }
