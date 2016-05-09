@@ -65,7 +65,7 @@ public class ConfigManager {
     //
     // Note: Preferred way of passing a config path is like this:
     // NSBundle.pathForResource("fileName", ofType: "yaml", inDirectory: "some/subdirectory")
-    init(basePath baseConfigPath: String?, environment: String? = nil) {
+    public init(basePath baseConfigPath: String?, environment: String? = nil) {
         guard let defaultConfigPath = baseConfigPath else {
             return
         }
@@ -75,7 +75,7 @@ public class ConfigManager {
         setupConfiguration(defaultConfigPath)
     }
     
-    subscript(keyPath: String) -> AnyObject? {
+    public subscript(keyPath: String) -> AnyObject? {
         let value: AnyObject? = keyPath.characters.split(".").map(String.init).reduce(configuration) { (c, key) -> AnyObject? in
             if let subConfig = c as? Dictionary<String, AnyObject> {
                 return subConfig[key]

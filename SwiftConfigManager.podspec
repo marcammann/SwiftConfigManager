@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.name = "ConfigManager"
   s.summary = "ConfigManager helps loading JSON files as configurations by allowing by-environment files, local-only files and extension of other JSON files."
   s.requires_arc = true
-  s.version = "0.9.0"
+  s.version = "0.9.2"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "Marc Ammann" => "marc@codesofa.com" }
   s.homepage = "https://github.com/marcammann/SwiftConfigManager"
