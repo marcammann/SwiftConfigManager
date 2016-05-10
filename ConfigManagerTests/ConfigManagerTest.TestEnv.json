@@ -1,5 +1,6 @@
 {
   "some": {
-    "config": "valuePrivate"
+  	"env": "implicitEnv",
+    "config": "valueEnv"
   }
 }

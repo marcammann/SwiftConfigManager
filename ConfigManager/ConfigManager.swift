@@ -95,11 +95,13 @@ public class ConfigManager {
             return
         }
         
-        for configFilePath in configFileEntryPoints! {
+        configuration = [String: AnyObject]()
+        for configFilePath in configFileEntryPoints!.reverse() {
             var error: NSError?
             if configFilePath.checkResourceIsReachableAndReturnError(&error) {
-                configuration = readConfiguration(configFilePath)
-                break
+                if let configurationContents = readConfiguration(configFilePath) {
+                    configuration?.updateWith(configurationContents)
+                }
             }
         }
         

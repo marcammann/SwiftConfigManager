@@ -1,5 +1,6 @@
 {
   "some": {
-    "config": "valuePrivate"
+  	"default": "implicitDefault",
+    "config": "valueDefault"
   }
 }

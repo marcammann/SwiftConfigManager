@@ -11,6 +11,8 @@ import XCTest
 
 struct K {
     static let TestKeyValue = ConfigManagerKey<String?>("some.config")
+    static let EnvKeyValue = ConfigManagerKey<String?>("some.env")
+    static let DefaultKeyValue = ConfigManagerKey<String?>("some.default")
     static let AnotherTestKeyValue = ConfigManagerKey<String?>("another.config")
 }
 
@@ -118,6 +120,16 @@ class ConfigManagerTests: XCTestCase {
         XCTAssertEqual(childConfigData["childConfigA"] as? String, "configAChildValue")
         XCTAssertEqual(childConfigData["configB"] as! [String], [ "childConfigBValue0", "childConfigBValue1", "childConfigBValue2" ])
         XCTAssertEqual(childConfigData["configA"] as? String, "configAValue")
+    }
+    
+    func testImplicitInheritance() {
+        let defaultPath = NSBundle(forClass: ConfigManagerTests.self).pathForResource("ConfigManagerTest", ofType: "json", inDirectory: "")
+        let configManager = ConfigManager(basePath: defaultPath, environment: "TestEnv")
+        
+        configManager["some.config"]
+        XCTAssertEqual(configManager[K.TestKeyValue], "valuePrivate")
+        XCTAssertEqual(configManager[K.EnvKeyValue], "implicitEnv")
+        XCTAssertEqual(configManager[K.DefaultKeyValue], "implicitDefault")
     }
     
     func testKeyAccess() {
