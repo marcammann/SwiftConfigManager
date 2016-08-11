@@ -57,6 +57,8 @@ public class ConfigManager {
             return value
         } else if let value = env[ConfigManagerStringConstants.EnvKey] {
             return value
+        } else if let bundleInfoDict = NSBundle.mainBundle().infoDictionary, value = bundleInfoDict["ConfigManagerEnv"] as? String {
+            return value
         }
         
         return nil
@@ -118,6 +120,11 @@ public class ConfigManager {
         // If there is no environment from either override or config, just
         // return the default paths.
         guard let env = configEnvironment else {
+            let folderPath = defaultUrlPath.URLByDeletingLastPathComponent
+            if let privateDefaultUrlPath = folderPath?.URLByAppendingPathComponent(ConfigManagerStringConstants.PrivateFilePrefix + filename) {
+                paths.insert(privateDefaultUrlPath, atIndex: 0)
+            }
+            
             return paths
         }
         
