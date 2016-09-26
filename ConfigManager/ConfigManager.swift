@@ -57,7 +57,7 @@ public class ConfigManager {
             return value
         } else if let value = env[ConfigManagerStringConstants.EnvKey] {
             return value
-        } else if let bundleInfoDict = NSBundle.mainBundle().infoDictionary, value = bundleInfoDict["ConfigManagerEnv"] as? String {
+        } else if let bundleInfoDict = NSBundle.mainBundle().infoDictionary, let value = bundleInfoDict["ConfigManagerEnv"] as? String {
             return value
         }
         
@@ -112,7 +112,7 @@ public class ConfigManager {
     static func configFilePaths(defaultPath: String, configEnvironment: String?) -> [NSURL]? {
         let defaultUrlPath = NSURL.fileURLWithPath(defaultPath)
         var paths = [defaultUrlPath]
-
+        
         guard let filename = defaultUrlPath.lastPathComponent else {
             return paths
         }
@@ -177,8 +177,8 @@ public class ConfigManager {
         
         // Check if there is a key to extend another config file. If so, extend recursively.
         if let extendedContentsFilename = configurationPayload?[ConfigManagerStringConstants.ConfigurationExtensionKey] as? String,
-            folderPath = path.URLByDeletingLastPathComponent,
-            _ = configurationPayload
+            let folderPath = path.URLByDeletingLastPathComponent,
+            let _ = configurationPayload
         {
             var extendedConfigurationPayload = readConfiguration(folderPath.URLByAppendingPathComponent(extendedContentsFilename)!)
             extendedConfigurationPayload?.updateWith(configurationPayload!)
