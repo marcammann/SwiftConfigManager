@@ -68,7 +68,7 @@ class ConfigManagerTests: XCTestCase {
             "typeChange": [ "typeChangeKeyB": "typeChangeValueB" ],
         ]
         
-        var dictB = sourceDictB
+        let dictB = sourceDictB
         
         dictA.updateWith(dictB)
         

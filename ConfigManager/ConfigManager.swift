@@ -180,7 +180,7 @@ public class ConfigManager {
             folderPath = path.URLByDeletingLastPathComponent,
             _ = configurationPayload
         {
-            var extendedConfigurationPayload = readConfiguration(folderPath.URLByAppendingPathComponent(extendedContentsFilename))
+            var extendedConfigurationPayload = readConfiguration(folderPath.URLByAppendingPathComponent(extendedContentsFilename)!)
             extendedConfigurationPayload?.updateWith(configurationPayload!)
             
             return extendedConfigurationPayload
