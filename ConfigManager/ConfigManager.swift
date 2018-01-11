@@ -133,9 +133,7 @@ public class ConfigManager {
         
         // Now we inject the environment into the path.
         let fileExtension = defaultUrlPath.pathExtension
-        var envSpecificFilePath = defaultUrlPath.deletingPathExtension()
-        envSpecificFilePath = envSpecificFilePath.appendingPathExtension(env)
-        envSpecificFilePath = envSpecificFilePath.appendingPathExtension(fileExtension)
+        let envSpecificFilePath = defaultUrlPath.deletingPathExtension().appendingPathExtension(env).appendingPathExtension(fileExtension)
 
         // Insert at index 1 because the private config file overrides
         paths.insert(envSpecificFilePath, at: 1)
@@ -191,12 +189,12 @@ public class ConfigManager {
 
 
 public extension ConfigManager {
-    public subscript(key: ConfigManagerKey<Any?>) -> Any? {
-        get { return self[key.keyPath] ?? key.defaultValue }
+    public subscript<T>(key: ConfigManagerKey<T>) -> T {
+        get { return self[key.keyPath] as? T ?? key.defaultValue }
     }
-    
-    public subscript(key: ConfigManagerKey<String?>) -> String? {
-        get { return self[key.keyPath] as? String ?? key.defaultValue }
+
+    public subscript<T: ExpressibleByNilLiteral>(key: ConfigManagerKey<T>) -> T {
+        get { return self[key.keyPath] as? T ?? key.defaultValue }
     }
     
     public subscript(key: ConfigManagerKey<URL?>) -> URL? {
@@ -208,87 +206,14 @@ public extension ConfigManager {
             return URL(string: rawValue)
         }
     }
-    
-    public subscript(key: ConfigManagerKey<Int?>) -> Int? {
-        get { return self[key.keyPath] as? Int ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<Double?>) -> Double? {
-        get { return self[key.keyPath] as? Double ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<Bool?>) -> Bool? {
-        get { return self[key.keyPath] as? Bool ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<Payload?>) -> Payload? {
-        get { return self[key.keyPath] as? Payload ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[AnyObject]?>) -> [AnyObject]? {
-        get { return self[key.keyPath] as? [AnyObject] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[String]?>) -> [String]? {
-        get { return self[key.keyPath] as? [String] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[Int]?>) -> [Int]? {
-        get { return self[key.keyPath] as? [Int] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[Payload]?>) -> [Payload]? {
-        get { return self[key.keyPath] as? [Payload] ?? key.defaultValue }
-    }
-}
 
-
-
-public extension ConfigManager {
-    public subscript(key: ConfigManagerKey<Any>) -> Any {
-        get { return self[key.keyPath] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<String>) -> String {
-        get { return self[key.keyPath] as? String ?? key.defaultValue }
-    }
-    
-    
     public subscript(key: ConfigManagerKey<URL>) -> URL {
         get {
             guard let rawValue = self[key.keyPath] as? String else {
                 return key.defaultValue
             }
-            
+
             return URL(string: rawValue)!
         }
-    }
-    
-    public subscript(key: ConfigManagerKey<Int>) -> Int {
-        get { return self[key.keyPath] as? Int ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<Double>) -> Double {
-        get { return self[key.keyPath] as? Double ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<Payload>) -> Payload {
-        get { return self[key.keyPath] as? Payload ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[AnyObject]>) -> [AnyObject] {
-        get { return self[key.keyPath] as? [AnyObject] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[String]>) -> [String] {
-        get { return self[key.keyPath] as? [String] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[Int]>) -> [Int] {
-        get { return self[key.keyPath] as? [Int] ?? key.defaultValue }
-    }
-    
-    public subscript(key: ConfigManagerKey<[Payload]>) -> [Payload] {
-        get { return self[key.keyPath] as? [Payload] ?? key.defaultValue }
     }
 }
