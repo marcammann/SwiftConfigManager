@@ -23,7 +23,7 @@ public protocol ConfigManagerKeyType {
 }
 
 
-public extension ConfigManagerKeyType where ValueType: NilLiteralConvertible {
+public extension ConfigManagerKeyType where ValueType: ExpressibleByNilLiteral {
     public init(_ key: String) {
         self.init(key, nil)
     }
@@ -46,18 +46,18 @@ public struct ConfigManagerKey<T>: ConfigManagerKeyType {
 public typealias Payload = [String: AnyObject]
 
 public class ConfigManager {
-    var configFileEntryPoints: [NSURL]?
+    var configFileEntryPoints: [URL]?
     
     var configuration: Payload?
     
     var overrideEnvironment: String?
     lazy var configEnvironment: String? = {
-        let env = NSProcessInfo.processInfo().environment
+        let env = ProcessInfo().environment
         if let value = self.overrideEnvironment {
             return value
         } else if let value = env[ConfigManagerStringConstants.EnvKey] {
             return value
-        } else if let bundleInfoDict = NSBundle.mainBundle().infoDictionary, value = bundleInfoDict["ConfigManagerEnv"] as? String {
+        } else if let bundleInfoDict = Bundle.main.infoDictionary, let value = bundleInfoDict["ConfigManagerEnv"] as? String {
             return value
         }
         
@@ -77,20 +77,22 @@ public class ConfigManager {
         setupConfiguration(defaultConfigPath)
     }
     
-    public subscript(keyPath: String) -> AnyObject? {
-        let value: AnyObject? = keyPath.characters.split(".").map(String.init).reduce(configuration) { (c, key) -> AnyObject? in
-            if let subConfig = c as? Dictionary<String, AnyObject> {
-                return subConfig[key]
+    public subscript(keyPath: String) -> Any? {
+        let splitKeyPath: [Substring] = keyPath.split(separator: ".")
+        var subConfig: Any? = self.configuration
+        splitKeyPath.forEach { (key) in
+            if let value = subConfig as? [String: AnyObject] {
+                subConfig = value[String(key)]
+            } else {
+                subConfig = nil
             }
-            
-            return nil
         }
-        
-        return value
+
+        return subConfig
     }
     
-    internal func setupConfiguration(defaultConfigPath: String) {
-        configFileEntryPoints = configFilePaths(defaultConfigPath)
+    internal func setupConfiguration(_ defaultConfigPath: String) {
+        configFileEntryPoints = configFilePaths(defaultPath: defaultConfigPath)
         
         guard let _ = configFileEntryPoints else {
             configuration = nil
@@ -98,71 +100,64 @@ public class ConfigManager {
         }
         
         configuration = [String: AnyObject]()
-        for configFilePath in configFileEntryPoints!.reverse() {
-            var error: NSError?
-            if configFilePath.checkResourceIsReachableAndReturnError(&error) {
-                if let configurationContents = readConfiguration(configFilePath) {
+        for configFilePath in configFileEntryPoints!.reversed() {
+            do {
+                if try configFilePath.checkResourceIsReachable(), let configurationContents = readConfiguration(configFilePath) {
                     configuration?.updateWith(configurationContents)
                 }
+            } catch {
+                continue
             }
         }
         
     }
     
-    static func configFilePaths(defaultPath: String, configEnvironment: String?) -> [NSURL]? {
-        let defaultUrlPath = NSURL.fileURLWithPath(defaultPath)
+    static func configFilePaths(defaultPath: String, configEnvironment: String?) -> [URL]? {
+        let defaultUrlPath = URL.init(fileURLWithPath: defaultPath)
         var paths = [defaultUrlPath]
 
-        guard let filename = defaultUrlPath.lastPathComponent else {
+        let filename = defaultUrlPath.lastPathComponent
+        if filename == "" {
             return paths
         }
-        
+
+        let folderPath = defaultUrlPath.deletingLastPathComponent()
+        let privateDefaultUrlPath = folderPath.appendingPathComponent(ConfigManagerStringConstants.PrivateFilePrefix + filename)
+        paths.insert(privateDefaultUrlPath, at: 0)
+
         // If there is no environment from either override or config, just
         // return the default paths.
         guard let env = configEnvironment else {
-            let folderPath = defaultUrlPath.URLByDeletingLastPathComponent
-            if let privateDefaultUrlPath = folderPath?.URLByAppendingPathComponent(ConfigManagerStringConstants.PrivateFilePrefix + filename) {
-                paths.insert(privateDefaultUrlPath, atIndex: 0)
-            }
-            
             return paths
         }
         
         // Now we inject the environment into the path.
         let fileExtension = defaultUrlPath.pathExtension
-        var envSpecificFilePath = defaultUrlPath.URLByDeletingPathExtension
-        envSpecificFilePath = envSpecificFilePath?.URLByAppendingPathExtension(env)
-        if let _ = fileExtension {
-            envSpecificFilePath = envSpecificFilePath?.URLByAppendingPathExtension(fileExtension!)
-        }
-        
-        if let _ = envSpecificFilePath {
-            paths.insert(envSpecificFilePath!, atIndex: 0)
-        }
-        
-        let folderPath = defaultUrlPath.URLByDeletingLastPathComponent
-        if let privateDefaultUrlPath = folderPath?.URLByAppendingPathComponent(ConfigManagerStringConstants.PrivateFilePrefix + filename) {
-            paths.insert(privateDefaultUrlPath, atIndex: 0)
-        }
+        var envSpecificFilePath = defaultUrlPath.deletingPathExtension()
+        envSpecificFilePath = envSpecificFilePath.appendingPathExtension(env)
+        envSpecificFilePath = envSpecificFilePath.appendingPathExtension(fileExtension)
+
+        // Insert at index 1 because the private config file overrides
+        paths.insert(envSpecificFilePath, at: 1)
         
         return paths
     }
     
-    internal func configFilePaths(defaultPath: String) -> [NSURL]? {
-        return ConfigManager.configFilePaths(defaultPath, configEnvironment: configEnvironment)
+    internal func configFilePaths(defaultPath: String) -> [URL]? {
+        return ConfigManager.configFilePaths(defaultPath: defaultPath, configEnvironment: configEnvironment)
     }
     
-    static func readConfiguration(path: NSURL) -> Payload? {
+    static func readConfiguration(path: URL) -> Payload? {
         let contents: String?
         // Read contents, otherwise return nil.
         do {
-            contents = try String(contentsOfFile: path.path!, encoding: NSUTF8StringEncoding)
+            contents = try String(contentsOfFile: path.path, encoding: String.Encoding.utf8)
         } catch _ {
             // Log some errors here.
             return nil
         }
-        
-        guard let data = contents?.dataUsingEncoding(NSUTF8StringEncoding) else {
+
+        guard let data = contents?.data(using: String.Encoding.utf8) else {
             return nil
         }
         
@@ -170,17 +165,17 @@ public class ConfigManager {
         // Enhancement: support other formats
         let configurationPayload: Payload?
         do {
-            configurationPayload = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? Payload
+            configurationPayload = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? Payload
         } catch _ {
             return nil
         }
-        
+
+        let folderPath = path.deletingLastPathComponent()
         // Check if there is a key to extend another config file. If so, extend recursively.
         if let extendedContentsFilename = configurationPayload?[ConfigManagerStringConstants.ConfigurationExtensionKey] as? String,
-            folderPath = path.URLByDeletingLastPathComponent,
-            _ = configurationPayload
+            let _ = configurationPayload
         {
-            var extendedConfigurationPayload = readConfiguration(folderPath.URLByAppendingPathComponent(extendedContentsFilename)!)
+            var extendedConfigurationPayload = readConfiguration(path: folderPath.appendingPathComponent(extendedContentsFilename))
             extendedConfigurationPayload?.updateWith(configurationPayload!)
             
             return extendedConfigurationPayload
@@ -189,14 +184,14 @@ public class ConfigManager {
         return configurationPayload
     }
     
-    internal func readConfiguration(path: NSURL) -> Payload? {
-        return ConfigManager.readConfiguration(path)
+    internal func readConfiguration(_ path: URL) -> Payload? {
+        return ConfigManager.readConfiguration(path: path)
     }
 }
 
 
 public extension ConfigManager {
-    public subscript(key: ConfigManagerKey<AnyObject?>) -> AnyObject? {
+    public subscript(key: ConfigManagerKey<Any?>) -> Any? {
         get { return self[key.keyPath] ?? key.defaultValue }
     }
     
@@ -204,13 +199,13 @@ public extension ConfigManager {
         get { return self[key.keyPath] as? String ?? key.defaultValue }
     }
     
-    public subscript(key: ConfigManagerKey<NSURL?>) -> NSURL? {
+    public subscript(key: ConfigManagerKey<URL?>) -> URL? {
         get {
             guard let rawValue = self[key.keyPath] as? String else {
                 return key.defaultValue
             }
             
-            return NSURL(string: rawValue)
+            return URL(string: rawValue)
         }
     }
     
@@ -250,7 +245,7 @@ public extension ConfigManager {
 
 
 public extension ConfigManager {
-    public subscript(key: ConfigManagerKey<AnyObject>) -> AnyObject {
+    public subscript(key: ConfigManagerKey<Any>) -> Any {
         get { return self[key.keyPath] ?? key.defaultValue }
     }
     
@@ -259,13 +254,13 @@ public extension ConfigManager {
     }
     
     
-    public subscript(key: ConfigManagerKey<NSURL>) -> NSURL {
+    public subscript(key: ConfigManagerKey<URL>) -> URL {
         get {
             guard let rawValue = self[key.keyPath] as? String else {
                 return key.defaultValue
             }
             
-            return NSURL(string: rawValue)!
+            return URL(string: rawValue)!
         }
     }
     

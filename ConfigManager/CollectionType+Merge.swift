@@ -30,7 +30,7 @@ import Foundation
 
 
 extension Dictionary {
-    mutating func updateWith(rhs: Dictionary<Key, Value>) {
+    mutating func updateWith(_ rhs: Dictionary<Key, Value>) {
         for (rhsKey, rhsValue) in rhs {
             // With dictionaries, we loop through and
             // check if we can do a deep merge.
@@ -42,7 +42,7 @@ extension Dictionary {
                 continue
             }
             
-            if let lhsDictionaryValue = self[rhsKey] as? Dictionary<Key, Value>, rhsDictionaryValue = rhsValue as? Dictionary<Key, Value> {
+            if let lhsDictionaryValue = self[rhsKey] as? Dictionary<Key, Value>, let rhsDictionaryValue = rhsValue as? Dictionary<Key, Value> {
                 var value = lhsDictionaryValue
                 value.updateWith(rhsDictionaryValue)
                 
